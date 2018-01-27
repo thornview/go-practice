@@ -18,12 +18,12 @@ var numberMap = map[string]int{
 
 func main() {
 	romanNum := strings.ToUpper(os.Args[1])
-	if isValidRomanNumeral(romanNum) {
-		intValues := convertRomanToInt(romanNum)
+	intValues := convertRomanToInt(romanNum)
+	if isValidRomanNumeral(intValues) {
 		sumTotal := calculateTotal(intValues)
-		fmt.Printf("Total: %d", sumTotal)
+		fmt.Printf("Total: %d\n", sumTotal)
 	} else {
-		errorMessage := "Yeah, that doesn't look like a real Roman Numeral."
+		errorMessage := "Hmm ... that doesn't look like a Roman Numeral to me."
 		fmt.Printf("%s\n", errorMessage)
 	}
 }
@@ -48,6 +48,28 @@ func calculateTotal(values []int) int {
 	return sumTotal
 }
 
-func isValidRomanNumeral(_ string) bool {
+func isValidRomanNumeral(numberSequence []int) bool {
+	for i := 0; i < len(numberSequence); i++ {
+		if i > 0 {
+			thisNum := numberSequence[i]
+			prevNum := numberSequence[i-1]
+			if thisNum == 0 {
+				// Letter is not valid for Roman numerals
+				return false
+			} else if thisNum > prevNum && !(prevNum*10 == thisNum || prevNum*5 == thisNum) {
+				// Cannot have higher number after lower number except multiples of 10 and 5
+				return false
+			}
+			if i > 2 {
+				// Cannot have ABA series (ex. ivi, xcx)
+				penultimateNum := numberSequence[i-2]
+				if thisNum == penultimateNum && thisNum != prevNum {
+					return false
+				}
+			}
+		} else if i == 0 && numberSequence[i] == 0 {
+			return false
+		}
+	}
 	return true
 }
