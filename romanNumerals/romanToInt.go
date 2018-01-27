@@ -15,6 +15,7 @@ var numberMap = map[string]int{
 	"V": 5,
 	"I": 1,
 }
+var errorMessage string
 
 func main() {
 	romanNum := strings.ToUpper(os.Args[1])
@@ -23,7 +24,6 @@ func main() {
 		sumTotal := calculateTotal(intValues)
 		fmt.Printf("Total: %d\n", sumTotal)
 	} else {
-		errorMessage := "Hmm ... that doesn't look like a Roman Numeral to me."
 		fmt.Printf("%s\n", errorMessage)
 	}
 }
@@ -49,28 +49,34 @@ func calculateTotal(values []int) int {
 }
 
 func isValidRomanNumeral(numberSequence []int) bool {
+	// TODO: Add
 	for i := 0; i < len(numberSequence); i++ {
 		if i > 0 {
 			thisNum := numberSequence[i]
 			prevNum := numberSequence[i-1]
 			if thisNum == 0 {
 				// Letter is not valid for Roman numerals
+				errorMessage = "Oops, you added a character that doesn't belong in a Roman Numeral."
 				return false
 			} else if thisNum > prevNum && !(prevNum*10 == thisNum || prevNum*5 == thisNum) {
 				// Cannot have higher number after lower number except multiples of 10 and 5
+				errorMessage = "It looks like you have some of those letters out of order."
 				return false
 			}
-			if i > 2 {
+			if i > 1 {
 				penultimateNum := numberSequence[i-2]
 				if thisNum == penultimateNum && thisNum != prevNum {
 					// Cannot have BAB series (ex. ivi, xcx)
+					errorMessage = "Hmm ... you can't have a low-high-low sequence like that."
 					return false
 				} else if thisNum > prevNum && prevNum == penultimateNum {
 					// Cannot have BBA series (ex. iiv, xxl)
+					errorMessage = "Hey, I found a high number after two low numbers.  I'm confused."
 					return false
 				}
 			}
 		} else if i == 0 && numberSequence[i] == 0 {
+			errorMessage = "Wow, that got off to a bad start.  That first character isn't a Roman Numeral."
 			return false
 		}
 		// cannot have more than 4 of any number
