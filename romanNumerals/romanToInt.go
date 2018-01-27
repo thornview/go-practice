@@ -61,15 +61,20 @@ func isValidRomanNumeral(numberSequence []int) bool {
 				return false
 			}
 			if i > 2 {
-				// Cannot have ABA series (ex. ivi, xcx)
 				penultimateNum := numberSequence[i-2]
 				if thisNum == penultimateNum && thisNum != prevNum {
+					// Cannot have BAB series (ex. ivi, xcx)
+					return false
+				} else if thisNum > prevNum && prevNum == penultimateNum {
+					// Cannot have BBA series (ex. iiv, xxl)
 					return false
 				}
 			}
 		} else if i == 0 && numberSequence[i] == 0 {
 			return false
 		}
+		// cannot have more than 4 of any number
+		// todo write a slice test to verify
 	}
 	return true
 }
