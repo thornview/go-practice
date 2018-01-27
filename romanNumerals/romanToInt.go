@@ -18,15 +18,20 @@ var numberMap = map[string]int{
 
 func main() {
 	romanNum := strings.ToUpper(os.Args[1])
-	intValues := convertRomanToInt(romanNum)
-	sumTotal := calculateTotal(intValues)
-	fmt.Printf("Total: %d", sumTotal)
+	if isValidRomanNumeral(romanNum) {
+		intValues := convertRomanToInt(romanNum)
+		sumTotal := calculateTotal(intValues)
+		fmt.Printf("Total: %d", sumTotal)
+	} else {
+		errorMessage := "Yeah, that doesn't look like a real Roman Numeral."
+		fmt.Printf("%s\n", errorMessage)
+	}
 }
 
 func convertRomanToInt(romanNum string) []int {
 	var values []int
-	for _, rune := range romanNum {
-		value := numberMap[string(rune)]
+	for _, rune := range romanNum { // The _ is a place holder for the index value, which we do not use so cannot assign to a variable
+		value := numberMap[string(rune)] // Note: if the rune provided is not a key in the map, the default int value of 0 is returned
 		values = append(values, value)
 	}
 	return values
@@ -41,4 +46,8 @@ func calculateTotal(values []int) int {
 		sumTotal += values[i]
 	}
 	return sumTotal
+}
+
+func isValidRomanNumeral(_ string) bool {
+	return true
 }
