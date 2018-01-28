@@ -50,7 +50,7 @@ func calculateTotal(values []int) int {
 	return sumTotal
 }
 
-func isValidRomanNumeral(numberSequence []int) (bool, error) { // the bool is extraneous but I wanted to try a multi-variate return
+func isValidRomanNumeral(numberSequence []int) (bool, error) { // Using the bool return in the tests
 	for i := 0; i < len(numberSequence); i++ {
 		if numberSequence[i] == 0 {
 			return false, fmt.Errorf("contains invalid character")
