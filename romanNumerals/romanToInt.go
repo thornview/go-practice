@@ -1,3 +1,7 @@
+
+// RomanToInt converts a roman numeral, provided as a command argument, 
+// into its integer equivalent.  It assumes the value will be less than 4,000
+// TODO: Write tests
 package main
 
 import (
@@ -49,7 +53,6 @@ func calculateTotal(values []int) int {
 }
 
 func isValidRomanNumeral(numberSequence []int) bool {
-	// TODO: Add
 	for i := 0; i < len(numberSequence); i++ {
 		if i > 0 {
 			thisNum := numberSequence[i]
@@ -80,7 +83,7 @@ func isValidRomanNumeral(numberSequence []int) bool {
 			return false
 		}
 		// cannot have more than 4 of any number
-		// todo write a slice test to verify
+		// TODO write a slice test to verify
 	}
 	return true
 }
