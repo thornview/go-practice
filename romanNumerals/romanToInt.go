@@ -1,5 +1,3 @@
-// RomanToInt converts a roman numeral, provided as a command argument,
-// into its integer equivalent.  It assumes the value will be less than 4,000
 package romanNumerals
 
 import (
