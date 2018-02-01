@@ -2,9 +2,7 @@ package romanNumerals
 
 import (
 	"fmt"
-	"os"
 	"sort"
-	"strconv"
 )
 
 var letterMap = map[int]string{
@@ -24,17 +22,20 @@ var letterMap = map[int]string{
 }
 
 var romanNumber string
+var intNumber int
 
-func intToRoman() {
-	number, err := strconv.Atoi(os.Args[1])
-	if err != nil || number >= 4000 || number < 1 {
-		fmt.Printf("%v is an invalid value.  Input must be an integer between 1 - 4000", number)
-	} else {
-		convertIntToRoman(number)
+func intToRoman(input int) (string, error) {
+	if input >= 4000 || input < 1 {
+		return "", fmt.Errorf("%d is an invalid value.  Input must be an integer between 1 - 4000", input)
 	}
+
+	intNumber = input
+	convertIntToRoman()
+	return romanNumber, nil
+
 }
 
-func convertIntToRoman(number int) {
+func convertIntToRoman() {
 	// Convert map into a slice so it can be sorted
 	var values []int
 	for value := range letterMap {
@@ -51,5 +52,10 @@ func convertIntToRoman(number int) {
 }
 
 func mapIntToLetters(value int) {
-	fmt.Printf("I see the number %d", value)
+	workingNum := intNumber
+	for workingNum > 0 {
+		if intNumber-value >= 0 {
+			romanNumber += letterMap[value]
+		}
+	}
 }
