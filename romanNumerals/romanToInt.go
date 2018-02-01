@@ -1,6 +1,6 @@
 // RomanToInt converts a roman numeral, provided as a command argument,
 // into its integer equivalent.  It assumes the value will be less than 4,000
-package main
+package romanNumerals
 
 import (
 	"fmt"
@@ -18,7 +18,7 @@ var numberMap = map[string]int{
 	"I": 1,
 }
 
-func main() {
+func romanToInt() {
 	romanNum := strings.ToUpper(os.Args[1])
 	intValues := convertRomanToInt(romanNum)
 	_, err := isValidRomanNumeral(intValues)
