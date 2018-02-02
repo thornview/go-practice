@@ -30,9 +30,9 @@ func intToRoman(input int) (string, error) {
 	}
 
 	intNumber = input
+	romanNumber = ""
 	convertIntToRoman()
 	return romanNumber, nil
-
 }
 
 func convertIntToRoman() {
@@ -53,9 +53,9 @@ func convertIntToRoman() {
 
 func mapIntToLetters(value int) {
 	workingNum := intNumber
-	for workingNum > 0 {
-		if intNumber-value >= 0 {
-			romanNumber += letterMap[value]
-		}
+	for workingNum > 0 && workingNum >= value && intNumber-value >= 0 {
+		workingNum -= value
+		romanNumber += letterMap[value]
 	}
+	intNumber = workingNum
 }
