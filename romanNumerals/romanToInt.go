@@ -2,7 +2,6 @@ package romanNumerals
 
 import (
 	"fmt"
-	"os"
 	"strings"
 )
 
@@ -16,15 +15,15 @@ var numberMap = map[string]int{
 	"I": 1,
 }
 
-func romanToInt() {
-	romanNum := strings.ToUpper(os.Args[1])
+func RomanToInt(input string) {
+	romanNum := strings.ToUpper(input)
 	intValues := convertRomanToInt(romanNum)
 	_, err := isValidRomanNumeral(intValues)
 	if err != nil {
 		fmt.Printf("Error in %s: %v", romanNum, err)
 	} else {
 		sumTotal := calculateTotal(intValues)
-		fmt.Printf("Total: %d\n", sumTotal)
+		fmt.Printf("\n%s =  %d\n", romanNum, sumTotal)
 	}
 }
 

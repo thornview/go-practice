@@ -16,7 +16,7 @@ func TestIntToRoman(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		got, _ := intToRoman(test.input)
+		got, _ := IntToRoman(test.input)
 		if got != test.want {
 			t.Errorf("intToRoman() = %v, wanted %v", got, test.want)
 		}

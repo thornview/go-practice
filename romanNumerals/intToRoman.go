@@ -24,7 +24,7 @@ var letterMap = map[int]string{
 var romanNumber string
 var intNumber int
 
-func intToRoman(input int) (string, error) {
+func IntToRoman(input int) (string, error) {
 	if input >= 4000 || input < 1 {
 		return "", fmt.Errorf("%d is an invalid value.  Input must be an integer between 1 - 4000", input)
 	}

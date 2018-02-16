@@ -1,25 +1,27 @@
 package main
 
 import (
-	"strings"
-	"romanNumerals"
-	"os"
+	"bufio"
 	"fmt"
+	"os"
+	"strconv"
+	"strings"
+	"unicode"
+
+	"github.com/thornview/romanNumerals"
 )
 
 func main() {
-	getInput()
-	
+	showMainMenu()
 }
 
-func getInput() {
-	fmt.Print('[R]oman to int, [I]nt to Roman, [C]alculator, [Q]uit?')
-	reader := bufio.NewReader(os.Stdin)
-	result, _, err := reader. ReadRune()
+func showMainMenu() {
+	fmt.Println("[R]oman to int, [I]nt to Roman, [C]alculator, [Q]uit? ")
+	result, err := getRune()
 	if err != nil {
-		fmt.Println(err)
-	} 
-	choice := strings.ToUpper(result)
+		showError()
+	}
+	choice := unicode.ToUpper(result)
 	switch choice {
 	case 'R':
 		runRomanToInt()
@@ -27,24 +29,65 @@ func getInput() {
 	case 'I':
 		runIntToRoman()
 		break
+	case 'C':
+		runCalc()
 	case 'Q':
-		return	
+		sayGoodbye()
+		return
 	default:
-		fmt.Printf("%s is not a valid command", choice)
-		getInput()
+		showError()
 	}
+	showMainMenu()
+}
+
+func showError() {
+	fmt.Printf("\nThat was not a valid input. \nTry Again.\n\n")
+	showMainMenu()
+}
+
+func getRune() (rune, error) {
+	reader := bufio.NewReader(os.Stdin)
+	result, _, err := reader.ReadRune()
+	return result, err
+}
+
+func getLine() string {
+	reader := bufio.NewReader(os.Stdin)
+	input, _ := reader.ReadString('\n')
+	return strings.TrimSpace(input)
+}
+
+func getNumber() (int, error) {
+	input := getLine()
+	number, err := strconv.Atoi(input)
+	return number, err
 }
 
 func runRomanToInt() {
-	fmt.Printf('Enter RomanNumeral: ')
-
+	fmt.Printf("Enter Roman Numeral: ")
+	romanNum := getLine()
+	romanNumerals.RomanToInt(romanNum)
 }
 
 func runIntToRoman() {
-	fmt.Printf('Enter Integer: ')
+	fmt.Printf("Enter Integer: ")
+	number, err := getNumber()
+	if err != nil {
+		showError()
+		return
+	}
+	romanNum, romanErr := romanNumerals.IntToRoman(number)
+	if romanErr != nil {
+		fmt.Printf("%v", romanErr)
+	}
+	fmt.Printf("\n\n%v = %s\n\n", number, romanNum)
 
 }
 
 func runCalc() {
+	fmt.Printf("Coming soon ... or not")
+}
 
+func sayGoodbye() {
+	fmt.Printf("\n\nGoodbye\n\n")
 }
