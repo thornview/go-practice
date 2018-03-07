@@ -20,14 +20,14 @@ func main() {
 func romToInt(w http.ResponseWriter, req *http.Request) {
 	romanNum := req.URL.Query().Get("roman")
 	int, _ := romanNumerals.RomanToInt(romanNum)
-	fmt.Fprintf(w, "{%s = %v}", romanNum, int)
+	fmt.Fprintf(w, "{romanNum: %s, int: %v}", romanNum, int)
 }
 
 func intToRom(w http.ResponseWriter, req *http.Request) {
 	input := req.URL.Query().Get("int")
 	num, _ := strconv.Atoi(input)
 	romanNum, _ := romanNumerals.IntToRoman(num)
-	fmt.Fprintf(w, "%v = %s", num, romanNum)
+	fmt.Fprintf(w, "{int: %v, romanNum: %s", num, romanNum)
 }
 
 func renderWebPage(w http.ResponseWriter, req *http.Request) {
