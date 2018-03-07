@@ -2,8 +2,7 @@ package wordGame
 
 func getWordList(letterSet []string) {
 	var whereClause []string
-	lengthClause := "length <= "
-	lengthClause += string(len(letterSet))
+	lengthClause := "length <= " + string(len(letterSet))
 	whereClause = append(whereClause, lengthClause)
 	// iterate through alphabet
 	// count occurences of letter in slice

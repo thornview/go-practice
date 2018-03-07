@@ -11,7 +11,7 @@ import (
 
 func main() {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", renderWebPage)
+	mux.Handle("/", http.FileServer(http.Dir("../static")))
 	mux.HandleFunc("/romToInt", romToInt)
 	mux.HandleFunc("/intToRom", intToRom)
 	log.Fatal(http.ListenAndServe("localhost:8000", mux))
@@ -28,9 +28,4 @@ func intToRom(w http.ResponseWriter, req *http.Request) {
 	num, _ := strconv.Atoi(input)
 	romanNum, _ := romanNumerals.IntToRoman(num)
 	fmt.Fprintf(w, "{int: %v, romanNum: %s", num, romanNum)
-}
-
-func renderWebPage(w http.ResponseWriter, req *http.Request) {
-	page := "<html><head><title>Go Roman Calculator</title></head><body><h1>Roman Numeral Calculator</h1></body></html>"
-	fmt.Fprintf(w, "you asked for: %s", page)
 }
