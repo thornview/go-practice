@@ -15,16 +15,16 @@ var numberMap = map[string]int{
 	"I": 1,
 }
 
-func RomanToInt(input string) {
+func RomanToInt(input string) (int, error) {
 	romanNum := strings.ToUpper(input)
 	intValues := convertRomanToInt(romanNum)
 	_, err := isValidRomanNumeral(intValues)
 	if err != nil {
-		fmt.Printf("Error in %s: %v", romanNum, err)
-	} else {
-		sumTotal := calculateTotal(intValues)
-		fmt.Printf("\n%s =  %d\n", romanNum, sumTotal)
+		return 0, err
 	}
+
+	sumTotal := calculateTotal(intValues)
+	return sumTotal, nil
 }
 
 func convertRomanToInt(romanNum string) []int {
