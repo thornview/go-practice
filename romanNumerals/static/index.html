@@ -4,5 +4,44 @@
     </head>
     <body>
         <h1>Roman Numeral Calculator</h1>
+        <div style="padding:10px;">
+            Roman Numeral: <input type="text" name="roman" id="roman_input">
+             = <span id="roman_output"></span>
+             <br>
+             <button id="roman_button">Calculate</button>
+        </div>
+
+        <div style="padding:10px;">
+            Integer: <input type="text" name="int" id="number_input">
+            = <span id="number_output"></span>
+            <br>
+            <button id="number_button">Calculate</button>
+            
+        </div>
     </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#roman_button").on("click", function(){
+                var input = $("#roman_input").val();
+                $.ajax({
+                    url: "/romToInt?roman=" + input, 
+                    success: function(result) {
+                        $("#roman_output").html(result);
+                    }
+                });
+            });
+            $("#number_button").on("click", function(){
+                var input = $("#number_input").val();
+                console.log("input: " + input);
+                $.ajax({
+                    url: "/intToRom?number=" + input, 
+                    success: function(result) {
+                        console.log("Result: " + JSON.stringify(result));
+                        $("#number_output").html(result);
+                    }
+                });
+            });
+        });
+    </script>
 </html>
